@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Huella Studio-Lab MX</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
+  <style>
+    :root {
+      --bg-color: #111;
+      --text-color: #eee;
+      --accent-color: #f39c12;
+      --accent-color-hover: #e67e22;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --button-bg: #f39c12;
+      --button-bg-hover: #e67e22;
+      --transition-speed: 0.4s;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 80px;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      scroll-behavior: smooth;
+      cursor: url("Color.png"), auto;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.8);
+      transition: background-color var(--transition-speed);
+    }
+
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      transition: color var(--transition-speed);
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: var(--accent-color-hover);
+      text-shadow: 0 0 8px var(--accent-color-hover);
+    }
+
+    header {
+      position: relative;
+      background: url("banner.png") center/cover no-repeat;
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--accent-color);
+      box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.75);
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUpSection 1s ease forwards;
+      animation-delay: 0.3s;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeInUpSection {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .portfolio-grid img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      filter: brightness(0.95);
+      will-change: transform;
+    }
+
+    .portfolio-grid img:hover {
+      transform: scale(1.08) rotate(1.5deg);
+      box-shadow: 0 10px 30px rgba(243, 156, 18, 0.7);
+      filter: brightness(1);
+      z-index: 2;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25d366;
+      color: white;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 1000;
+      cursor: pointer;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.15);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.9);
+    }
+
+    .scroll-top {
+      position: fixed;
+      bottom: 95px;
+      right: 20px;
+      background-color: var(--accent-color);
+      color: white;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--accent-color-hover);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 999;
+    }
+
+    .scroll-top:hover {
+      transform: scale(1.15);
+      box-shadow: 0 6px 25px var(--accent-color-hover);
+    }
+
+    .servicio-card {
+      background-color: var(--card-bg);
+      border-radius: 18px;
+      padding: 1.7rem;
+      margin: 1rem 0;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.07);
+      transition: all 0.4s ease;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: default;
+      user-select: none;
+    }
+
+    .servicio-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 0 30px rgba(243, 156, 18, 0.35);
+      background-color: rgba(243, 156, 18, 0.1);
+      color: var(--accent-color);
+    }
+
+    #nosotros img {
+      max-width: 90%;
+      max-height: 600px;
+      object-fit: contain;
+      margin-bottom: 2.4rem;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(243, 156, 18, 0.75);
+      transition: box-shadow 0.5s ease;
+    }
+
+    #nosotros img:hover {
+      box-shadow: 0 0 40px rgba(243, 156, 18, 1);
+    }
+
+    #nosotros .info-text {
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: 1.28rem;
+      line-height: 1.6;
+      font-weight: 500;
+      color: #f5f5f5dd;
+      transition: color 0.4s ease;
+      text-align: justify;
+    }
+
+    #colaboradores-section {
+      padding: 4rem 2rem;
+      background: rgba(243, 156, 18, 0.05);
+      border-radius: 20px;
+      margin: 3rem auto;
+      max-width: 960px;
+      text-align: center;
+    }
+
+    #colaboradores-section h2 {
+      margin-bottom: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      text-shadow: 0 0 12px var(--accent-color);
+    }
+
+    #colaboradores {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    #colaboradores img {
+      height: 70px;
+      filter: brightness(0.8);
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(243, 156, 18, 0.1);
+      box-shadow: 0 0 15px rgba(243, 156, 18, 0.3);
+      transition: transform 0.35s ease, filter 0.35s ease, box-shadow 0.35s ease;
+      user-select: none;
+    }
+
+    #colaboradores img:hover {
+      filter: brightness(1);
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(243, 156, 18, 0.7);
+    }
+
+    #contacto a {
+      color: var(--accent-color);
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    #contacto a:hover {
+      color: var(--accent-color-hover);
+      text-decoration: underline;
+    }
+
+    /* Botón cambio idioma */
+    #language-toggle {
+      position: fixed;
+      top: 15px;
+      right: 100px;
+      background: var(--button-bg);
+      color: #111;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(243, 156, 18, 0.7);
+      transition: background-color 0.3s ease, color 0.3s ease,
+        box-shadow 0.3s ease;
+      z-index: 1100;
+      user-select: none;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    #language-toggle:hover {
+      background: var(--button-bg-hover);
+      color: white;
+      box-shadow: 0 6px 25px rgba(230, 126, 34, 0.9);
+    }
+
+    /* Modo claro */
+    body.light {
+      --bg-color: #f5f5f5;
+      --text-color: #111;
+      --card-bg: #fff;
+      --button-bg: #e67e22;
+      --button-bg-hover: #d35400;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      cursor: auto;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    body.light nav {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    body.light nav a {
+      color: var(--text-color);
+    }
+
+    body.light nav a:hover {
+      color: var(--button-bg-hover);
+      text-shadow: none;
+    }
+
+    body.light .servicio-card {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      box-shadow: 0 0 15px rgba(214, 137, 0, 0.2);
+    }
+
+    body.light .servicio-card:hover {
+      background-color: var(--button-bg);
+      color: white;
+      box-shadow: 0 0 30px var(--button-bg);
+    }
+
+    body.light #nosotros img {
+      box-shadow: 0 0 30px var(--button-bg);
+    }
+
+    body.light #colaboradores-section {
+      background: #fff6e8;
+    }
+
+    body.light #colaboradores-section h2 {
+      color: var(--button-bg);
+      text-shadow: none;
+    }
+
+    body.light #colaboradores img {
+      background: var(--button-bg-hover);
+      filter: brightness(1);
+      box-shadow: 0 0 15px var(--button-bg);
+    }
+
+    body.light #colaboradores img:hover {
+      box-shadow: 0 0 25px var(--button-bg-hover);
+    }
+
+    body.light #contacto a {
+      color: var(--button-bg);
+    }
+
+    body.light #contacto a:hover {
+      color: var(--button-bg-hover);
+    }
+
+    body.light .whatsapp-float {
+      background-color: #128c7e;
+      box-shadow: 0 6px 18px rgba(18, 140, 126, 0.6);
+    }
+
+    body.light .whatsapp-float:hover {
+      box-shadow: 0 8px 25px rgba(18, 140, 126, 0.9);
+    }
+
+    /* Botón modo oscuro */
+    #dark-mode-toggle {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      background: var(--button-bg);
+      color: #111;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 22px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(243, 156, 18, 0.7);
+      transition: background-color 0.3s ease, color 0.3s ease,
+        box-shadow 0.3s ease;
+      z-index: 1100;
+      user-select: none;
+    }
+
+    #dark-mode-toggle:hover {
+      background: var(--button-bg-hover);
+      color: white;
+      box-shadow: 0 6px 25px rgba(230, 126, 34, 0.9);
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="d-flex justify-content-center align-items-center py-3">
+    <a href="#nosotros" data-key="nav_nosotros">Nosotros</a>
+    <a href="#catalogo" data-key="nav_catalogo">Catálogo</a>
+    <a href="#portafolio" data-key="nav_portafolio">Portafolio</a>
+    <a href="#contacto" data-key="nav_contacto">Contacto</a>
+  </nav>
+
+  <button id="language-toggle" aria-label="Toggle Language">EN</button>
+  <button id="dark-mode-toggle" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+
+  <header>
+    <img src="Color.png" alt="Logo Huella Studio-Lab MX" style="height: 140px" />
+  </header>
+
+  <section id="nosotros" class="section text-center">
+    <img src="intro.png" alt="Equipo Huella Studio-Lab MX" />
+    <div class="info-text">
+      <p><strong>Valores:</strong> Pasión, compromiso, calidad, originalidad.</p>
+      <p><strong>Misión:</strong> Crear soluciones visuales que generen impacto y valor.</p>
+      <p><strong>Visión:</strong> Ser una agencia reconocida por su innovación y creatividad.</p>
+    </div>
+  </section>
+
+  <section id="catalogo" class="section">
+    <h2 class="text-center mb-4" data-key="catalogo_titulo">¿Qué hacemos?</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 servicio-card" data-key="catalogo_1">Dirección de diseño y arte</div>
+        <div class="col-md-6 servicio-card" data-key="catalogo_2">Branding completo</div>
+        <div class="col-md-6 servicio-card" data-key="catalogo_3">Diseño para marca y ropa</div>
+        <div class="col-md-6 servicio-card" data-key="catalogo_4">Diseño de álbum cover, flyers y papelería</div>
+        <div class="col-md-6 servicio-card" data-key="catalogo_5">Asesoría de marca</div>
+        <div class="col-md-6 servicio-card" data-key="catalogo_6">Diseño para redes sociales</div>
+        <div class="col-md-6 servicio-card" data-key="catalogo_7">Diseño para streaming y overlays</div>
+        <div class="col-md-6 servicio-card" data-key="catalogo_8">Arte visual y digital</div>
+        <div class="col-md-6 servicio-card" data-key="catalogo_9">Música sin licencias</div>
+        <div class="col-md-6 servicio-card" data-key="catalogo_10">Mockups y mucho más</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portafolio" class="section">
+    <div class="container">
+      <h2 class="text-center mb-5" data-key="portafolio_titulo">Portafolio</h2>
+      <div class="portfolio-grid">
+        <img src="Convo25_Mesa de trabajo 1.png" alt="Trabajo 1" />
+        <img src="Convocatoria.png" alt="Trabajo 2" />
+        <img src="OL.png" alt="Trabajo 3" />
+        <img src="venom3.png" alt="Trabajo 4" />
+        <img src="1g.png" alt="Trabajo 5" />
+        <img src="gear2.png" alt="Trabajo 7" />
+        <img src="goal1.png" alt="Trabajo 8" />
+        <img src="logo_Mesa de trabajo 1.png" alt="Trabajo 9" />
+        <img src="LiveatElback.png" alt="Trabajo 10" />
+        <img src="Logofinal.png" alt="Trabajo 11" />
+        <img src="Shirt.png" alt="Trabajo 12" />
+        <img src="snacks20251.png" alt="Trabajo 13" />
+        <img src="burger20251.png" alt="Trabajo 14" />
+        <img src="Habanerodrill.png" alt="Trabajo 15" />
+        <img src="Snacks.png" alt="Trabajo 16" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Colaboradores separada y centrada -->
+  <section id="colaboradores-section" aria-label="Colaboradores">
+    <h2 data-key="colaboraciones_titulo">Colaboraciones</h2>
+    <div id="colaboradores">
+      <img src="Logo3T.png" alt="Colaboración 1" />
+      <img src="Logo12.png" alt="Colaboración 2" />
+      <img src="GS2025T.png" alt="Colaboración 3" />
+      <img src="LOGOtouch.png" alt="Colaboración 4" />
+      <img src="udg8.webp" alt="Colaboración 5" />
+    </div>
+  </section>
+
+  <section id="contacto" class="section text-center">
+    <h2 data-key="contacto_titulo">Contacto</h2>
+    <p>
+      <span data-key="contacto_correo">Correo:</span>
+      <a href="mailto:victoralonso.monzon@gmail.com"
+        >victoralonso.monzon@gmail.com</a
+      >
+    </p>
+    <p>
+      <span data-key="contacto_facebook">Facebook:</span>
+      <a
+        href="https://www.facebook.com/profile.php?id=61578291193009"
+        target="_blank"
+        rel="noopener"
+        >Huella Studio-Lab MX</a
+      >
+    </p>
+  </section>
+
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/5213329208270"
+    target="_blank"
+    aria-label="WhatsApp Contact"
+    ><i class="fab fa-whatsapp"></i
+  ></a>
+
+  <div
+    class="scroll-top"
+    title="Scroll to top"
+    onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    aria-label="Scroll to top"
+  >
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Traducciones para navegación y títulos (sin afectar valores/mision/vision fijos)
+    const translations = {
+      en: {
+        nav_nosotros: "About Us",
+        nav_catalogo: "Catalog",
+        nav_portafolio: "Portfolio",
+        nav_contacto: "Contact",
+        catalogo_titulo: "What We Do?",
+        portafolio_titulo: "Portfolio",
+        colaboraciones_titulo: "Collaborations",
+        contacto_titulo: "Contact",
+        contacto_correo: "Email:",
+        contacto_facebook: "Facebook:",
+      },
+      es: {
+        nav_nosotros: "Nosotros",
+        nav_catalogo: "Catálogo",
+        nav_portafolio: "Portafolio",
+        nav_contacto: "Contacto",
+        catalogo_titulo: "¿Qué hacemos?",
+        portafolio_titulo: "Portafolio",
+        colaboraciones_titulo: "Colaboraciones",
+        contacto_titulo: "Contacto",
+        contacto_correo: "Correo:",
+        contacto_facebook: "Facebook:",
+      },
+    };
+
+    const langToggleBtn = document.getElementById("language-toggle");
+    let currentLang = "es";
+
+    function updateTexts(lang) {
+      document.querySelectorAll("[data-key]").forEach((el) => {
+        const key = el.getAttribute("data-key");
+        if (translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+      langToggleBtn.textContent = lang === "es" ? "EN" : "ES";
+    }
+
+    langToggleBtn.addEventListener("click", () => {
+      currentLang = currentLang === "es" ? "en" : "es";
+      updateTexts(currentLang);
+    });
+
+    // Inicializa texto en español
+    updateTexts(currentLang);
+
+    // Modo oscuro / claro toggle
+    const darkToggleBtn = document.getElementById("dark-mode-toggle");
+    darkToggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      if (document.body.classList.contains("light")) {
+        darkToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+      } else {
+        darkToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+      }
+    });
+
+    // Mostrar botón scroll-top solo cuando se baja
+    const scrollTopBtn = document.querySelector(".scroll-top");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 400) {
+        scrollTopBtn.style.display = "flex";
+      } else {
+        scrollTopBtn.style.display = "none";
+      }
+    });
+
+    // Inicialmente ocultar botón scroll top
+    scrollTopBtn.style.display = "none";
+  </script>
+</body>
+
+</html>
+
+
+
